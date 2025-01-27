@@ -1,0 +1,953 @@
+SQL> cl scr
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE ENAME LIKE 'P%';
+
+no rows selected
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE JOB IN ('ANALYST','CLERK') AND DEPTNO IN (10,20);
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM      
+---------- ---------- --------- ---------- --------- ---------- ----------      
+    DEPTNO                                                                      
+----------                                                                      
+      7369 SMITH      CLERK           7902 17-DEC-80        800                 
+        20                                                                      
+                                                                                
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                 
+        20                                                                      
+                                                                                
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                 
+        20                                                                      
+                                                                                
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM      
+---------- ---------- --------- ---------- --------- ---------- ----------      
+    DEPTNO                                                                      
+----------                                                                      
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                 
+        20                                                                      
+                                                                                
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                 
+        10                                                                      
+                                                                                
+
+SQL> SET PAGES 200 LINES 200
+SQL> /
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20                                                                                                                   
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20                                                                                                                   
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20                                                                                                                   
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20                                                                                                                   
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10                                                                                                                   
+
+SQL> SELECT *
+  2  FROM DEPT;
+
+    DEPTNO DNAME          LOC                                                                                                                                                                           
+---------- -------------- -------------                                                                                                                                                                 
+        10 ACCOUNTING     NEW YORK                                                                                                                                                                      
+        20 RESEARCH       DALLAS                                                                                                                                                                        
+        30 SALES          CHICAGO                                                                                                                                                                       
+        40 OPERATIONS     BOSTON                                                                                                                                                                        
+
+SQL> SELECT *
+  2  FROM DEPT
+  3  WHERE LOC LIKE '% %' AND DNAME LIKE '%EE%';
+
+no rows selected
+
+SQL> SELECT *
+  2  FROM DEPT
+  3  WHERE LOC LIKE '% %';
+
+    DEPTNO DNAME          LOC                                                                                                                                                                           
+---------- -------------- -------------                                                                                                                                                                 
+        10 ACCOUNTING     NEW YORK                                                                                                                                                                      
+
+SQL> SELECT *
+  2  FROM DEPT
+  3  WHERE LOC LIKE '% %' AND DNAME LIKE '%E%E%';
+
+no rows selected
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE (JOB LIKE '%A%A%')AND(SAL BETWEEN 1200 AND 2800) AND DEPTNO IN (10,20,30);
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30                                                                                                                   
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30                                                                                                                   
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30                                                                                                                   
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10                                                                                                                   
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30                                                                                                                   
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE (MGR NOT LIKE '%8')AND(JOB NOT IN ('MANAGER','SALESMAN'))AND DEPTNO IN 30;
+
+no rows selected
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE (COMM IS NULL) AND (JOB IN ('CLERK','MANAGER')SELECT *
+  4  FROM DEPT
+  5  WHERE LOC LIKE '% %' AND DNAME LIKE '%EE%';
+WHERE (COMM IS NULL) AND (JOB IN ('CLERK','MANAGER')SELECT *
+                              *
+ERROR at line 3:
+ORA-00907: missing right parenthesis 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT *
+  2  FROM EMP
+  3* WHERE (COMM IS NULL) AND (JOB NOT IN ('CLERK','MANAGER'))AND HIREDATE LIKE '%81' AND SAL >1500
+SQL> /
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10                                                                                                                   
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20                                                                                                                   
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE (ENAME LIKE '_____')AND (HIREDATE LIKE '%80' OR HIREDATE LIKE '%81') AND (MGR IS NOT NULL ) AND (SAL BETWEEN 800 AND 2000) AND DEPTNO IN (30,40);
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30                                                                                                                   
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30                                                                                                                   
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE (ENAME LIKE '_____' ) AND ( ENAME LIKE '%A%' OR ENAME LIKE '%E%' OR ENAME LIKE '%I%' OR ENAME LIKE '%O%' OR ENAME LIKE '%U%');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20                                                                                                                   
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30                                                                                                                   
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20                                                                                                                   
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30                                                                                                                   
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10                                                                                                                   
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20                                                                                                                   
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20                                                                                                                   
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30                                                                                                                   
+
+8 rows selected.
+
+
+
+
+SQL> SELECT table_name FROM all_tables;
+
+TABLE_NAME                                                                                                                                                                                              
+------------------------------                                                                                                                                                                          
+DUAL                                                                                                                                                                                                    
+SYSTEM_PRIVILEGE_MAP                                                                                                                                                                                    
+TABLE_PRIVILEGE_MAP                                                                                                                                                                                     
+STMT_AUDIT_OPTION_MAP                                                                                                                                                                                   
+AUDIT_ACTIONS                                                                                                                                                                                           
+PSTUBTBL                                                                                                                                                                                                
+WRI$_ADV_ASA_RECO_DATA                                                                                                                                                                                  
+ODCI_SECOBJ$                                                                                                                                                                                            
+ODCI_WARNINGS$                                                                                                                                                                                          
+DEF$_TEMP$LOB                                                                                                                                                                                           
+OL$                                                                                                                                                                                                     
+OL$HINTS                                                                                                                                                                                                
+OL$NODES                                                                                                                                                                                                
+KU$NOEXP_TAB                                                                                                                                                                                            
+IMPDP_STATS                                                                                                                                                                                             
+PLAN_TABLE$                                                                                                                                                                                             
+WM$WORKSPACES_TABLE                                                                                                                                                                                     
+WM$VERSION_TABLE                                                                                                                                                                                        
+WM$NEXTVER_TABLE                                                                                                                                                                                        
+WM$VERSION_HIERARCHY_TABLE                                                                                                                                                                              
+HELP                                                                                                                                                                                                    
+DR$OBJECT_ATTRIBUTE                                                                                                                                                                                     
+DR$POLICY_TAB                                                                                                                                                                                           
+DR$NUMBER_SEQUENCE                                                                                                                                                                                      
+RLM$PARSEDCOND                                                                                                                                                                                          
+OGIS_SPATIAL_REFERENCE_SYSTEMS                                                                                                                                                                          
+OGIS_GEOMETRY_COLUMNS                                                                                                                                                                                   
+SDO_UNITS_OF_MEASURE                                                                                                                                                                                    
+SDO_PRIME_MERIDIANS                                                                                                                                                                                     
+SDO_ELLIPSOIDS                                                                                                                                                                                          
+SDO_DATUMS                                                                                                                                                                                              
+SDO_COORD_SYS                                                                                                                                                                                           
+SDO_COORD_AXIS_NAMES                                                                                                                                                                                    
+SDO_COORD_AXES                                                                                                                                                                                          
+SDO_COORD_REF_SYS                                                                                                                                                                                       
+SDO_COORD_OP_METHODS                                                                                                                                                                                    
+SDO_COORD_OPS                                                                                                                                                                                           
+SDO_PREFERRED_OPS_SYSTEM                                                                                                                                                                                
+SDO_PREFERRED_OPS_USER                                                                                                                                                                                  
+SDO_COORD_OP_PATHS                                                                                                                                                                                      
+SDO_COORD_OP_PARAMS                                                                                                                                                                                     
+SDO_COORD_OP_PARAM_USE                                                                                                                                                                                  
+SDO_COORD_OP_PARAM_VALS                                                                                                                                                                                 
+SDO_XML_SCHEMAS                                                                                                                                                                                         
+AW$AWMD                                                                                                                                                                                                 
+AW$EXPRESS                                                                                                                                                                                              
+AW$AWCREATE                                                                                                                                                                                             
+AW$AWCREATE10G                                                                                                                                                                                          
+AW$AWXML                                                                                                                                                                                                
+AW$AWREPORT                                                                                                                                                                                             
+OLAPTABLEVELS                                                                                                                                                                                           
+OLAPTABLEVELTUPLES                                                                                                                                                                                      
+MVIEW$_ADV_INDEX                                                                                                                                                                                        
+MVIEW$_ADV_PARTITION                                                                                                                                                                                    
+MVIEW$_ADV_OWB                                                                                                                                                                                          
+OLAPI_HISTORY                                                                                                                                                                                           
+OLAPI_SESSION_HISTORY                                                                                                                                                                                   
+OLAPI_IFACE_OBJECT_HISTORY                                                                                                                                                                              
+OLAPI_IFACE_OP_HISTORY                                                                                                                                                                                  
+OLAPI_MEMORY_OP_HISTORY                                                                                                                                                                                 
+OLAPI_MEMORY_HEAP_HISTORY                                                                                                                                                                               
+XML_LOAD_RECORDS                                                                                                                                                                                        
+XML_LOAD_LOG                                                                                                                                                                                            
+CWM2$_AW_NEXT_TEMP_CUST_MEAS                                                                                                                                                                            
+CWM2$_AW_TEMP_CUST_MEAS_MAP                                                                                                                                                                             
+CWM2$_TEMP_VALUES                                                                                                                                                                                       
+CWM2$AWDIMCREATEACCESS                                                                                                                                                                                  
+CWM2$AWCUBECREATEACCESS                                                                                                                                                                                 
+OLAP_SESSION_DIMS                                                                                                                                                                                       
+OLAP_SESSION_CUBES                                                                                                                                                                                      
+OLAP_OLEDB_KEYWORDS                                                                                                                                                                                     
+OLAP_OLEDB_MDPROPVALS                                                                                                                                                                                   
+OLAP_OLEDB_MDPROPS                                                                                                                                                                                      
+OLAP_OLEDB_FUNCTIONS_PVT                                                                                                                                                                                
+SDO_TXN_IDX_INSERTS                                                                                                                                                                                     
+SDO_TXN_IDX_DELETES                                                                                                                                                                                     
+SDO_TXN_IDX_EXP_UPD_RGN                                                                                                                                                                                 
+SDO_TOPO_TRANSACT_DATA                                                                                                                                                                                  
+SDO_TOPO_RELATION_DATA                                                                                                                                                                                  
+SDO_TOPO_DATA$                                                                                                                                                                                          
+SDO_PROJECTIONS_OLD_SNAPSHOT                                                                                                                                                                            
+SDO_CS_SRS                                                                                                                                                                                              
+SDO_ELLIPSOIDS_OLD_SNAPSHOT                                                                                                                                                                             
+SDO_DATUMS_OLD_SNAPSHOT                                                                                                                                                                                 
+SDO_GEOR_XMLSCHEMA_TABLE                                                                                                                                                                                
+SDO_GR_MOSAIC_0                                                                                                                                                                                         
+SDO_GR_MOSAIC_1                                                                                                                                                                                         
+SDO_GR_MOSAIC_2                                                                                                                                                                                         
+SDO_GR_MOSAIC_3                                                                                                                                                                                         
+SDO_GR_RDT_1                                                                                                                                                                                            
+SDO_GEOR_PLUGIN_REGISTRY                                                                                                                                                                                
+DEPT                                                                                                                                                                                                    
+EMP                                                                                                                                                                                                     
+BONUS                                                                                                                                                                                                   
+SALGRADE                                                                                                                                                                                                
+
+95 rows selected.
+
+
+SQL> CL SCR
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE ENAME LIKE 'S%'
+  4  AND ENAME NOT LIKE '%A'
+  5  AND ENAME NOT LIKE '%E'
+  6   AND ENAME NOT LIKE '%I'
+  7   AND ENAME NOT LIKE '%O'
+  8   AND ENAME NOT LIKE '%U';
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20                                                                                                                   
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20                                                                                                                   
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE JOB IN 'MANAGER';
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20                                                                                                                   
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30                                                                                                                   
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10                                                                                                                   
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE MGR LIKE '%8';
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30                                                                                                                   
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30                                                                                                                   
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30                                                                                                                   
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30                                                                                                                   
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20                                                                                                                   
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30                                                                                                                   
+
+6 rows selected.
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE JOB IN 'SALESMAN'
+  4  AND SAL BETWEEN 1500 AND 3000;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30                                                                                                                   
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30                                                                                                                   
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE JOB IN ('MANAGER','SALESMAN') AND DEPTNO IN (20,30) AND SAL BETWEEN 1000 AND 3000;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30                                                                                                                   
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30                                                                                                                   
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20                                                                                                                   
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30                                                                                                                   
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30                                                                                                                   
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30                                                                                                                   
+
+6 rows selected.
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE (SAL BETWEEN 1000 AND 2000)AND DEPTNO IN (10,20,30) AND JOB NOT IN 'CLERK';
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30                                                                                                                   
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30                                                                                                                   
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30                                                                                                                   
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30                                                                                                                   
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE ENAME LIKE 'A%'
+  4  AND SAL > 1000;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30                                                                                                                   
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20                                                                                                                   
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE ENAME LIKE '%MM%';
+
+no rows selected
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE JOB NOT IN ('CLERK') AND DEPTNO IN (10,20);
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20                                                                                                                   
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10                                                                                                                   
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20                                                                                                                   
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10                                                                                                                   
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20                                                                                                                   
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE ENAME LIKE '%P%P%'
+  4  AND SAL BETWEEN 1000 AND 3000;
+
+no rows selected
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE COMM IS NULL
+  4  AND DEPTNO IN (10,20);
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20                                                                                                                   
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20                                                                                                                   
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10                                                                                                                   
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20                                                                                                                   
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10                                                                                                                   
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20                                                                                                                   
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20                                                                                                                   
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10                                                                                                                   
+
+8 rows selected.
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE MGR IS NULL AND DEPTNO IN (20,30);
+
+no rows selected
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE ENAME NOT LIKE 'A%';
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20                                                                                                                   
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30                                                                                                                   
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20                                                                                                                   
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30                                                                                                                   
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30                                                                                                                   
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10                                                                                                                   
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20                                                                                                                   
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10                                                                                                                   
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30                                                                                                                   
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30                                                                                                                   
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20                                                                                                                   
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10                                                                                                                   
+
+12 rows selected.
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE HIREDATE LIKE '%87';
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20                                                                                                                   
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20                                                                                                                   
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE ENAME LIKE '%T%T%';
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20                                                                                                                   
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE EMPNO NOT IN 7650;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20                                                                                                                   
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30                                                                                                                   
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30                                                                                                                   
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20                                                                                                                   
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30                                                                                                                   
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30                                                                                                                   
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10                                                                                                                   
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20                                                                                                                   
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10                                                                                                                   
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30                                                                                                                   
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20                                                                                                                   
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30                                                                                                                   
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20                                                                                                                   
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10                                                                                                                   
+
+14 rows selected.
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE JOB = 'SALESMAN' AND DEPTNO = 30;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30                                                                                                                   
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30                                                                                                                   
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30                                                                                                                   
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30                                                                                                                   
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE SAL IN (3000,2000);
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20                                                                                                                   
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20                                                                                                                   
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE ENAME LIKE '%R%';
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30                                                                                                                   
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30                                                                                                                   
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10                                                                                                                   
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30                                                                                                                   
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20                                                                                                                   
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10                                                                                                                   
+
+6 rows selected.
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE SAL BETWEEN 800 AND 2500;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20                                                                                                                   
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30                                                                                                                   
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30                                                                                                                   
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30                                                                                                                   
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10                                                                                                                   
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30                                                                                                                   
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20                                                                                                                   
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30                                                                                                                   
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10                                                                                                                   
+
+9 rows selected.
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE DEPTNO NOT IN 30;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20                                                                                                                   
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20                                                                                                                   
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10                                                                                                                   
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20                                                                                                                   
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10                                                                                                                   
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20                                                                                                                   
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20                                                                                                                   
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10                                                                                                                   
+
+8 rows selected.
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE JOB ='ANALYST' AND SAL>=2000;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20                                                                                                                   
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20                                                                                                                   
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE ENAME LIKE 'A%T';
+
+no rows selected
+
+SQL> SELECT ENAME.*,SAL*12
+  2  FROM EMP
+  3  WHERE JOB = 'MANAGER';
+SELECT ENAME.*,SAL*12
+             *
+ERROR at line 1:
+ORA-00964: table name not in FROM list 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,SAL*12
+  2  FROM EMP
+  3* WHERE JOB = 'MANAGER'
+SQL> /
+
+ENAME          SAL*12                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+JONES           35700                                                                                                                                                                                   
+BLAKE           34200                                                                                                                                                                                   
+CLARK           29400                                                                                                                                                                                   
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE JOB LIKE '%E_';
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20                                                                                                                   
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30                                                                                                                   
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10                                                                                                                   
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE COMM IS NULL
+  4  AND SAL > 1000;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20                                                                                                                   
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30                                                                                                                   
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10                                                                                                                   
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20                                                                                                                   
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10                                                                                                                   
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20                                                                                                                   
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20                                                                                                                   
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10                                                                                                                   
+
+8 rows selected.
+
+SQL> SELECT DNAME
+  2  FROM DEPT
+  3  WHERE LOC LIKE '%LL%';
+
+DNAME                                                                                                                                                                                                   
+--------------                                                                                                                                                                                          
+RESEARCH                                                                                                                                                                                                
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE DEPTNO NOT IN 20 AND ENAME NOT LIKE 'M%';
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30                                                                                                                   
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30                                                                                                                   
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30                                                                                                                   
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10                                                                                                                   
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10                                                                                                                   
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30                                                                                                                   
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30                                                                                                                   
+
+7 rows selected.
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE EMPNO BETWEEN 7000 AND 8000;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20                                                                                                                   
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30                                                                                                                   
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30                                                                                                                   
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20                                                                                                                   
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30                                                                                                                   
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30                                                                                                                   
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10                                                                                                                   
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20                                                                                                                   
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10                                                                                                                   
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30                                                                                                                   
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20                                                                                                                   
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30                                                                                                                   
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20                                                                                                                   
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10                                                                                                                   
+
+14 rows selected.
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE SAL NOT BETWEEN 1500 AND 3000;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20                                                                                                                   
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30                                                                                                                   
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30                                                                                                                   
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10                                                                                                                   
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20                                                                                                                   
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30                                                                                                                   
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10                                                                                                                   
+
+7 rows selected.
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE SAL > 1000 AND HIREDATE LIKE '%DEC%' AND MGR IS NOT NULL;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20                                                                                                                   
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE JOB LIKE '____%' AND DEPTNO = 20;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20                                                                                                                   
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20                                                                                                                   
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20                                                                                                                   
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20                                                                                                                   
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20                                                                                                                   
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE JOB = 'CLERK' AND ENAME LIKE '%S' AND DEPTNO NOT IN 10;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20                                                                                                                   
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30                                                                                                                   
+
+SQL> SELECT ENAME
+  2  FROM EMP
+  3  WHERE ENAME LIKE '_____';
+
+ENAME                                                                                                                                                                                                   
+----------                                                                                                                                                                                              
+SMITH                                                                                                                                                                                                   
+ALLEN                                                                                                                                                                                                   
+JONES                                                                                                                                                                                                   
+BLAKE                                                                                                                                                                                                   
+CLARK                                                                                                                                                                                                   
+SCOTT                                                                                                                                                                                                   
+ADAMS                                                                                                                                                                                                   
+JAMES                                                                                                                                                                                                   
+
+8 rows selected.
+
+SQL> SELECT *
+  2  FROM EMP;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20                                                                                                                   
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30                                                                                                                   
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30                                                                                                                   
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20                                                                                                                   
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30                                                                                                                   
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30                                                                                                                   
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10                                                                                                                   
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20                                                                                                                   
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10                                                                                                                   
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30                                                                                                                   
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20                                                                                                                   
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30                                                                                                                   
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20                                                                                                                   
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10                                                                                                                   
+
+14 rows selected.
+
+SQL> SELECT *
+  2  FROM EMP
+  3  GROUP BY SAL
+  4  HAVING SAL>MAX(COMM);
+SELECT *
+       *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT SAL
+  2  FROM EMP
+  3  GROUP BY SAL
+  4* HAVING SAL>MAX(COMM)
+SQL> /
+
+       SAL                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+      1600                                                                                                                                                                                              
+      1500                                                                                                                                                                                              
+
+SQL> SELECT COUNT(*),SAL
+  2  FROM EMP
+  3  GROUP BY SAL
+  4  HAVING SAL>MAX(COMM);
+
+  COUNT(*)        SAL                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+         1       1600                                                                                                                                                                                   
+         1       1500                                                                                                                                                                                   
+
+SQL> SELECT ENAME || 'IS EARNING' || SAL || 'IN DEPARTMENT NO' || DEPTNO
+  2  FROM EMP;
+
+ENAME||'ISEARNING'||SAL||'INDEPARTMENTNO'||DEPTNO                                                                                                                                                       
+--------------------------------------------------------------------------------------------------------------------                                                                                    
+SMITHIS EARNING800IN DEPARTMENT NO20                                                                                                                                                                    
+ALLENIS EARNING1600IN DEPARTMENT NO30                                                                                                                                                                   
+WARDIS EARNING1250IN DEPARTMENT NO30                                                                                                                                                                    
+JONESIS EARNING2975IN DEPARTMENT NO20                                                                                                                                                                   
+MARTINIS EARNING1250IN DEPARTMENT NO30                                                                                                                                                                  
+BLAKEIS EARNING2850IN DEPARTMENT NO30                                                                                                                                                                   
+CLARKIS EARNING2450IN DEPARTMENT NO10                                                                                                                                                                   
+SCOTTIS EARNING3000IN DEPARTMENT NO20                                                                                                                                                                   
+KINGIS EARNING5000IN DEPARTMENT NO10                                                                                                                                                                    
+TURNERIS EARNING1500IN DEPARTMENT NO30                                                                                                                                                                  
+ADAMSIS EARNING1100IN DEPARTMENT NO20                                                                                                                                                                   
+JAMESIS EARNING950IN DEPARTMENT NO30                                                                                                                                                                    
+FORDIS EARNING3000IN DEPARTMENT NO20                                                                                                                                                                    
+MILLERIS EARNING1300IN DEPARTMENT NO10                                                                                                                                                                  
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME || ' IS EARNING ' || SAL || ' IN DEPARTMENT NO ' || DEPTNO
+  2* FROM EMP
+SQL> /
+
+ENAME||'ISEARNING'||SAL||'INDEPARTMENTNO'||DEPTNO                                                                                                                                                       
+------------------------------------------------------------------------------------------------------------------------                                                                                
+SMITH IS EARNING 800 IN DEPARTMENT NO 20                                                                                                                                                                
+ALLEN IS EARNING 1600 IN DEPARTMENT NO 30                                                                                                                                                               
+WARD IS EARNING 1250 IN DEPARTMENT NO 30                                                                                                                                                                
+JONES IS EARNING 2975 IN DEPARTMENT NO 20                                                                                                                                                               
+MARTIN IS EARNING 1250 IN DEPARTMENT NO 30                                                                                                                                                              
+BLAKE IS EARNING 2850 IN DEPARTMENT NO 30                                                                                                                                                               
+CLARK IS EARNING 2450 IN DEPARTMENT NO 10                                                                                                                                                               
+SCOTT IS EARNING 3000 IN DEPARTMENT NO 20                                                                                                                                                               
+KING IS EARNING 5000 IN DEPARTMENT NO 10                                                                                                                                                                
+TURNER IS EARNING 1500 IN DEPARTMENT NO 30                                                                                                                                                              
+ADAMS IS EARNING 1100 IN DEPARTMENT NO 20                                                                                                                                                               
+JAMES IS EARNING 950 IN DEPARTMENT NO 30                                                                                                                                                                
+FORD IS EARNING 3000 IN DEPARTMENT NO 20                                                                                                                                                                
+MILLER IS EARNING 1300 IN DEPARTMENT NO 10                                                                                                                                                              
+
+14 rows selected.
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE ENAME LIKE '_A%R_';
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30                                                                                                                   
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE SAL BETWEEN 301 AND 3000;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20                                                                                                                   
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30                                                                                                                   
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30                                                                                                                   
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20                                                                                                                   
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30                                                                                                                   
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30                                                                                                                   
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10                                                                                                                   
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20                                                                                                                   
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30                                                                                                                   
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20                                                                                                                   
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30                                                                                                                   
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20                                                                                                                   
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10                                                                                                                   
+
+13 rows selected.
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE JOB = 'ANALYST';
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20                                                                                                                   
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20                                                                                                                   
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE COMM IS NULL;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20                                                                                                                   
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20                                                                                                                   
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30                                                                                                                   
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10                                                                                                                   
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20                                                                                                                   
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10                                                                                                                   
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20                                                                                                                   
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30                                                                                                                   
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20                                                                                                                   
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10                                                                                                                   
+
+10 rows selected.
+
+SQL> SELECT ENAME,SAL*12+500 AS ANNUALSALARY
+  2  FROM EMP
+  3  WHERE JOB ='MANAGER' AND (HIREDATE LIKE '%APR%' OR HIREDATE LIKE '%MAY%');
+
+ENAME      ANNUALSALARY                                                                                                                                                                                 
+---------- ------------                                                                                                                                                                                 
+JONES             36200                                                                                                                                                                                 
+BLAKE             34700                                                                                                                                                                                 
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE EMPNO LIKE '78%' OR EMPNO LIKE '79%'
+  4  AND JOB LIKE '%E%'
+  5  AND DEPTNO IN (20,30);
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10                                                                                                                   
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30                                                                                                                   
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20                                                                                                                   
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30                                                                                                                   
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE (DEPTNO IN (30,20)) AND (HIREDATE BETWEEN '02-JAN-81' AND '09-JUN-81');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30                                                                                                                   
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30                                                                                                                   
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20                                                                                                                   
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30                                                                                                                   
+
+SQL> SELECT JOB,HIREDATE
+  2  FROM EMP
+  3  WHERE (ENAME LIKE 'A%' OR ENAME LIKE 'S%')AND DEPTNO IN (30,20);
+
+JOB       HIREDATE                                                                                                                                                                                      
+--------- ---------                                                                                                                                                                                     
+CLERK     17-DEC-80                                                                                                                                                                                     
+SALESMAN  20-FEB-81                                                                                                                                                                                     
+ANALYST   19-APR-87                                                                                                                                                                                     
+CLERK     23-MAY-87                                                                                                                                                                                     
+
+SQL> SELECT DNAME
+  2  FROM DEPT
+  3  WHERE (DNAME LIKE '%S%S%')AND(DNAME LIKE '%O%' OR DNAME LIKE '%A%');
+
+DNAME                                                                                                                                                                                                   
+--------------                                                                                                                                                                                          
+SALES                                                                                                                                                                                                   
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE JOB = 'MANAGER'
+  4  AND DEPTNO IN (20,30)
+  5  AND HIREDATE BETWEEN '02-JAN-81' AND '09-JUN-81';
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20                                                                                                                   
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30                                                                                                                   
+
+SQL> SELECT JOB,HIREDATE,COMM
+  2  FROM EMP
+  3  WHERE EMPNO LIKE '78%' OR EMPNO LIKE '79%'
+  4  AND JOB LIKE '%E%'
+  5  AND DEPTNO IN (20,30);
+
+JOB       HIREDATE        COMM                                                                                                                                                                          
+--------- --------- ----------                                                                                                                                                                          
+PRESIDENT 17-NOV-81                                                                                                                                                                                     
+SALESMAN  08-SEP-81          0                                                                                                                                                                          
+CLERK     23-MAY-87                                                                                                                                                                                     
+CLERK     03-DEC-81                                                                                                                                                                                     
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT JOB,HIREDATE,COMM
+  2  FROM EMP
+  3  WHERE ENAME LIKE 'A%' OR ENAME LIKE 'S%'
+  4* AND DEPTNO IN (20,30)
+SQL> /
+
+JOB       HIREDATE        COMM                                                                                                                                                                          
+--------- --------- ----------                                                                                                                                                                          
+CLERK     17-DEC-80                                                                                                                                                                                     
+SALESMAN  20-FEB-81        300                                                                                                                                                                          
+ANALYST   19-APR-87                                                                                                                                                                                     
+CLERK     23-MAY-87                                                                                                                                                                                     
+
+SQL> 60
+SP2-0226: Invalid line number 
+SQL> 60;
+SP2-0226: Invalid line number 
+SQL> SPOOL
+currently spooling to C:\Users\Anurag Singh\Desktop\sql\Assignment350.LST
+SQL> SPOOL OFF
