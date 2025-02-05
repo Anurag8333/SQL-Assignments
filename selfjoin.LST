@@ -1,0 +1,255 @@
+SQL> cl scr
+SQL> SET PAGES 200 LINES 200
+SQL> SELECT E.ENAME,M.ENAME
+  2  FROM EMP E,EMP M
+  3  WHERE E.MGR=M.EMPNO AND E.JOB = 'CLERK';
+
+ENAME      ENAME                                                                                                                                                                                        
+---------- ----------                                                                                                                                                                                   
+SMITH      FORD                                                                                                                                                                                         
+ADAMS      SCOTT                                                                                                                                                                                        
+JAMES      BLAKE                                                                                                                                                                                        
+MILLER     CLARK                                                                                                                                                                                        
+
+SQL> SELECT E.ENAME AND D.LOC
+  2  FROM EMP E,EMP M,DEPT D
+  3  WHERE E.MGR=M.EMPNO AND M.DEPTNO = D.DEPTNO AND M.DEPTNO IN(10,20);
+SELECT E.ENAME AND D.LOC
+               *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E.ENAME , D.LOC
+  2  FROM EMP E,EMP M,DEPT D
+  3* WHERE E.MGR=M.EMPNO AND M.DEPTNO = D.DEPTNO AND M.DEPTNO IN(10,20)
+SQL> /
+
+ENAME      LOC                                                                                                                                                                                          
+---------- -------------                                                                                                                                                                                
+SMITH      DALLAS                                                                                                                                                                                       
+JONES      NEW YORK                                                                                                                                                                                     
+BLAKE      NEW YORK                                                                                                                                                                                     
+CLARK      NEW YORK                                                                                                                                                                                     
+SCOTT      DALLAS                                                                                                                                                                                       
+ADAMS      DALLAS                                                                                                                                                                                       
+FORD       DALLAS                                                                                                                                                                                       
+MILLER     NEW YORK                                                                                                                                                                                     
+
+8 rows selected.
+
+SQL> SELECT E.ENAME,M.SAL
+  2  FROM EMP E,EMP M
+  3  WHERE E.MGR=M.EMPNO AND E.SAL>2300 AND M.SAL>2300;
+
+ENAME             SAL                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+JONES            5000                                                                                                                                                                                   
+BLAKE            5000                                                                                                                                                                                   
+CLARK            5000                                                                                                                                                                                   
+SCOTT            2975                                                                                                                                                                                   
+FORD             2975                                                                                                                                                                                   
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E.ENAME,M.HIREDATE
+  2  FROM EMP E,EMP M
+  3* WHERE E.MGR=M.EMPNO AND E.HIREDATE<'01-JAN-1982'
+SQL> /
+
+ENAME      HIREDATE                                                                                                                                                                                     
+---------- ---------                                                                                                                                                                                    
+SMITH      03-DEC-81                                                                                                                                                                                    
+ALLEN      01-MAY-81                                                                                                                                                                                    
+WARD       01-MAY-81                                                                                                                                                                                    
+JONES      17-NOV-81                                                                                                                                                                                    
+MARTIN     01-MAY-81                                                                                                                                                                                    
+BLAKE      17-NOV-81                                                                                                                                                                                    
+CLARK      17-NOV-81                                                                                                                                                                                    
+TURNER     01-MAY-81                                                                                                                                                                                    
+JAMES      01-MAY-81                                                                                                                                                                                    
+FORD       02-APR-81                                                                                                                                                                                    
+
+10 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E.ENAME,M.COMM
+  2  FROM EMP E,EMP M
+  3* WHERE E.MGR=M.EMPNO AND E.JOB ='SALESMAN' AND M.DEPTNO IN(30)
+SQL> /
+
+ENAME            COMM                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+ALLEN                                                                                                                                                                                                   
+WARD                                                                                                                                                                                                    
+MARTIN                                                                                                                                                                                                  
+TURNER                                                                                                                                                                                                  
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E.ENAME,E.SAL,M.ENAME,M.SAL
+  2  FROM EMP E,EMP M
+  3* WHERE E.MGR=M.EMPNO AND E.SAL>M.SAL
+SQL> /
+
+ENAME             SAL ENAME             SAL                                                                                                                                                             
+---------- ---------- ---------- ----------                                                                                                                                                             
+SCOTT            3000 JONES            2975                                                                                                                                                             
+FORD             3000 JONES            2975                                                                                                                                                             
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E.ENAME,E.HIREDATE,M.ENAME,M.HIREDATE
+  2  FROM EMP E,EMP M
+  3* WHERE E.MGR=M.EMPNO AND E.HIREDATE>M.HIREDATE
+SQL> /
+
+ENAME      HIREDATE  ENAME      HIREDATE                                                                                                                                                                
+---------- --------- ---------- ---------                                                                                                                                                               
+MARTIN     28-SEP-81 BLAKE      01-MAY-81                                                                                                                                                               
+SCOTT      19-APR-87 JONES      02-APR-81                                                                                                                                                               
+TURNER     08-SEP-81 BLAKE      01-MAY-81                                                                                                                                                               
+ADAMS      23-MAY-87 SCOTT      19-APR-87                                                                                                                                                               
+JAMES      03-DEC-81 BLAKE      01-MAY-81                                                                                                                                                               
+FORD       03-DEC-81 JONES      02-APR-81                                                                                                                                                               
+MILLER     23-JAN-82 CLARK      09-JUN-81                                                                                                                                                               
+
+7 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E.ENAME,M.ENAME
+  2  FROM EMP E,EMP M
+  3* WHERE E.MGR=M.EMPNO AND E.JOB =M.JOB
+SQL> /
+
+no rows selected
+
+SQL> SELECT * FROM EMP
+  2  ;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20                                                                                                                   
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30                                                                                                                   
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30                                                                                                                   
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20                                                                                                                   
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30                                                                                                                   
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30                                                                                                                   
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10                                                                                                                   
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20                                                                                                                   
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10                                                                                                                   
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30                                                                                                                   
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20                                                                                                                   
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30                                                                                                                   
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20                                                                                                                   
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10                                                                                                                   
+
+14 rows selected.
+
+SQL> SELECT E.ENAME , M.ENAME
+  2  WHERE EMP E,EMP M
+  3  WHERE E.MGR=M.EMPNO AND M.JOB = 'MANAGER';
+WHERE EMP E,EMP M
+*
+ERROR at line 2:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E.ENAME , M.ENAME
+  2  FROM EMP E,EMP M
+  3* WHERE E.MGR=M.EMPNO AND M.JOB = 'MANAGER'
+SQL> /
+
+ENAME      ENAME                                                                                                                                                                                        
+---------- ----------                                                                                                                                                                                   
+ALLEN      BLAKE                                                                                                                                                                                        
+WARD       BLAKE                                                                                                                                                                                        
+MARTIN     BLAKE                                                                                                                                                                                        
+SCOTT      JONES                                                                                                                                                                                        
+TURNER     BLAKE                                                                                                                                                                                        
+JAMES      BLAKE                                                                                                                                                                                        
+FORD       JONES                                                                                                                                                                                        
+MILLER     CLARK                                                                                                                                                                                        
+
+8 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E.ENAME,E.SAL*12 AS "EMP ANNUALSALARY" , M.ENAME,M.SAL*12 AS "MG ANNUALSALARY"
+  2  FROM EMP E,EMP M
+  3* WHERE E.MGR=M.EMPNO AND E.DEPTNO IN(10,20) AND M.SAL>E.SAL
+SQL> /
+
+ENAME      EMP ANNUALSALARY ENAME      MG ANNUALSALARY                                                                                                                                                  
+---------- ---------------- ---------- ---------------                                                                                                                                                  
+SMITH                  9600 FORD                 36000                                                                                                                                                  
+JONES                 35700 KING                 60000                                                                                                                                                  
+CLARK                 29400 KING                 60000                                                                                                                                                  
+ADAMS                 13200 SCOTT                36000                                                                                                                                                  
+MILLER                15600 CLARK                29400                                                                                                                                                  
+
+SQL> SELECT E.ENAME,D.LOC
+  2  FROM EMP E,EMP M,DEPT D
+  3  WHERE E.MGR=M.EMPNO AND M.DEPTNO=D.DEPTNO;
+
+ENAME      LOC                                                                                                                                                                                          
+---------- -------------                                                                                                                                                                                
+SMITH      DALLAS                                                                                                                                                                                       
+ALLEN      CHICAGO                                                                                                                                                                                      
+WARD       CHICAGO                                                                                                                                                                                      
+JONES      NEW YORK                                                                                                                                                                                     
+MARTIN     CHICAGO                                                                                                                                                                                      
+BLAKE      NEW YORK                                                                                                                                                                                     
+CLARK      NEW YORK                                                                                                                                                                                     
+SCOTT      DALLAS                                                                                                                                                                                       
+TURNER     CHICAGO                                                                                                                                                                                      
+ADAMS      DALLAS                                                                                                                                                                                       
+JAMES      CHICAGO                                                                                                                                                                                      
+FORD       DALLAS                                                                                                                                                                                       
+MILLER     NEW YORK                                                                                                                                                                                     
+
+13 rows selected.
+
+SQL> SELECT E.ENAME AND M.SAL
+  2  FROM EMP E,EMP M
+  3  WHERE E.MGR=M.EMPNO AND M.SAL LIKE '%50';
+SELECT E.ENAME AND M.SAL
+               *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E.ENAME, M.SAL
+  2  FROM EMP E,EMP M
+  3* WHERE E.MGR=M.EMPNO AND M.SAL LIKE '%50'
+SQL> /
+
+ENAME             SAL                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+ALLEN            2850                                                                                                                                                                                   
+WARD             2850                                                                                                                                                                                   
+MARTIN           2850                                                                                                                                                                                   
+TURNER           2850                                                                                                                                                                                   
+JAMES            2850                                                                                                                                                                                   
+MILLER           2450                                                                                                                                                                                   
+
+6 rows selected.
+
+SQL> SPOOL OFF
